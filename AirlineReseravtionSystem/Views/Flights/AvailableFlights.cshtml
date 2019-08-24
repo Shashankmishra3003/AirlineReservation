@@ -1,0 +1,103 @@
+﻿@model IEnumerable<AirlineReseravtionSystem.Models.ReturningValue>
+
+@{
+    ViewData["Title"] = "AvailableFlights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Available Flights</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Departure)
+            </th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Arrival)
+            </th>
+
+            <th>
+                Duration
+            </th>
+
+            <th>
+                Price
+            </th>
+        </tr>
+        
+    </thead>
+
+    <tbody>
+        @foreach(var flight in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => flight.Name)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => flight.Departure)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => flight.Arrival)
+            </td>
+
+            <td>
+                @*Calculating the total duration of the flight, This model takes into considetation
+            the flights completing their journey on the same day*@
+                @{
+                    int depHrs = 0, depMins = 0, arrHrs = 0, arrMins = 0;
+                    string[] depTime = flight.Departure.Split(":");
+                    string[] arrTime = flight.Arrival.Split(":");
+
+                    depHrs = Int32.Parse(depTime[0]);
+                    depMins = Int32.Parse(depTime[1]);
+                    arrHrs = Int32.Parse(arrTime[0]);
+                    arrMins = Int32.Parse(arrTime[1]);
+
+
+                    string durationHrs = Math.Abs(arrHrs - depHrs).ToString();
+                    string durationMins = Math.Abs(arrMins - depMins).ToString();
+
+                    string flightDuration = durationHrs + "h  " + durationMins + "m";
+
+                }
+
+                @flightDuration
+            </td>
+
+            <td>
+                
+
+                @if (flight.PEconomy == 0)
+                {
+                    @Html.DisplayFor(modelItem => flight.PFirst)
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => flight.PEconomy)
+                }
+
+            </td>
+            @{ 
+
+            <td>
+                <a asp-action="BookFlight" asp-route-id="@flight.Id" asp--route-ticketNum="@flight.TicketSelected">Select Seats</a>
+            </td>
+            }
+            
+
+        </tr>
+        }
+    </tbody>
+</table>
+
+
+

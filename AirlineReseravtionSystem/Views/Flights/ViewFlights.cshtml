@@ -1,0 +1,60 @@
+﻿@model IEnumerable<AirlineReseravtionSystem.Models.Flights>
+@{
+    ViewData["Title"] = "ViewFlights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>List of Flights</h3>
+
+
+<p>
+    <a asp-action="AddNewFlight">Add a new Flight</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model =>model.FlightNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Source)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Destination)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Destination)
+            </td>
+
+            <td>
+                <a asp-action="FLightDetails" asp-route-id="@item.FlightsID">Details</a>
+            </td>
+            <td>
+                <a asp-action="EditFlightDetails" asp-route-id="@item.FlightsID">Edit</a>
+            </td>
+            <td>
+                <a asp-action="DeleteFlight" asp-route-id="@item.FlightsID">Delete</a>
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+

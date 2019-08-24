@@ -1,0 +1,89 @@
+﻿@model AirlineReseravtionSystem.Models.Flights
+@{
+    ViewData["Title"] = "FlightDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h3>Flight Details</h3>
+<hr />
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FlightNumber)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FlightNumber)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FlightName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FlightName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Source)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Source)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Destination)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Destination)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartsOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DepartsOn)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivesOn)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ArrivesOn)
+        </dd>
+
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EconomyNos)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EconomyNos)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FirstNos)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FirstNos)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PriceEconomy)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PriceEconomy)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PriceFirst)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PriceFirst)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+
+<div>
+    <a asp-action="ViewFlights">Back to Flight List</a>
+</div>
+

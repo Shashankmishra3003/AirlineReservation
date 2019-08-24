@@ -1,0 +1,128 @@
+﻿@model AirlineReseravtionSystem.Models.Flights
+@{
+    ViewBag.Title = "Home";
+}
+
+<h1><strong>Search Flights</strong></h1>
+
+@*<div class="radio-container">
+    <form>
+        <label class=" radio-inline">
+            <input type="radio" name="one-way" /> One way
+        </label>
+        <label class="radio-inline">
+            <input type="radio" name="two-way" /> Round trip
+        </label>
+    </form>
+</div>*@
+
+<form asp-controller="Flights" asp-action="AvailableFlights" method="post">
+
+    <div class="source-destination">
+
+        <div class="grid-item">
+            <h6><strong>From</strong></h6>
+        </div>
+
+        <div class="grid-item">
+            <h6><strong>To</strong></h6>
+        </div>
+
+        <div class="grid-item">
+            <input required class="form-control" type="text" id="from-tag" name="FromSearch" placeholder="Any city or Airport" aria-label="Any city or Airport" />
+        </div>
+
+        <div class="grid-item">
+            <input required class="form-control" type="text" id="to-tag" name="ToSearch" placeholder="Any city or Airport" aria-label="Any city or Airport" />
+        </div>
+
+    </div>
+
+    <div class="grid-item">
+        <h6><strong>Depart-On</strong></h6>
+    </div>
+
+    @{
+        DateTime date = DateTime.Today;
+        date.ToString("dd/MM/yyyy");
+        <div>
+            <input required type="date" name="DateSearch"  min=@date>
+        </div>
+    }
+
+
+
+
+    <div class="passenger-info">
+        <div class="grid-item">
+            <h6><strong>Adults</strong></h6>
+        </div>
+
+        <div class="grid-item">
+            <h6><strong>Children</strong></h6>
+        </div>
+
+        <div class="grid-item">
+            <h6><strong>Infants</strong></h6>
+        </div>
+
+        <div class="grid-item">
+            <select name="AdultSearch">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+            </select>
+        </div>
+
+        <div class="grid-item">
+            <select name="ChildrenSearch">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+
+            </select>
+        </div>
+
+        <div class="grid-item">
+            <select name="InfantSearch">
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+
+            </select>
+        </div>
+    </div>
+
+
+    <div class="class-of-travel">
+        <div class="grid-item">
+            Class of Travel
+        </div>
+
+        <div class="grid-item">
+            <select name="ClassSearch">
+                <option value="economy">Economy</option>
+                <option value="first">First</option>
+            </select>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="search-flight">
+        <div class="form-group">
+            <input type="submit" value="Search Flights" class="btn btn-primary" />
+        </div>
+    </div>
+
+</form>
+
+
+
+
