@@ -3,7 +3,7 @@
     ViewData["Title"] = "BookFlight";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<script src="~/js/site.js" type="text/javascript" asp-append-version="true"></script>
 
 <div class="plane">
     <div class="cockpit">
@@ -11,123 +11,185 @@
     </div>
     <div class="exit exit--front fuselage">
     </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
+    <table class="table">
+        @*
+            ----< heading of all the seating columns >----
+        *@
+        <thead>
+            <tr>
+                <th>
 
-                    </th>
-                    <th>
-                        A
-                    </th>
+                </th>
+                <th>
+                    A
+                </th>
 
-                    <th>
-                        B
-                    </th>
+                <th>
+                    B
+                </th>
 
-                    <th>
-                        C
-                    </th>
+                <th>
+                    C
+                </th>
 
-                    <th>
-                        D
-                    </th>
-                    <th>
-                        E
-                    </th>
-                    <th>
-                        F
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+                <th>
+                    D
+                </th>
+                <th>
+                    E
+                </th>
+                <th>
+                    F
+                </th>
+            </tr>
+        </thead>
+        <tbody>
 
-                @*
-        ----< Convert the 2 strings returned from the Controller into Arrays >----
-                *@
+            @*
+                ----< Convert the 2 strings returned from the Controller into Arrays >----
+            *@
 
             @{
-                    string[] seatNumber = { };
-                    string[] seatStatus = { };
+                int numberOfTickets = 0;
+                string[] seatNumber = { };
+                string[] seatStatus = { };
 
-                    foreach (var seating in Model)
+                foreach (var seating in Model)
+                {
+                    if (seating.flightSeating.EconomyClassSeatNumbers == null)
                     {
-                        if (seating.flightSeating.EconomyClassSeatNumbers == null)
-                        {
-                            seatNumber = seating.flightSeating.FirstClassSeatNumbers.Split(",");
-                            seatStatus = seating.flightSeating.FirstClassSeatStatus.Split(",");
-                        }
-                        else
-                        {
-                            seatNumber = seating.flightSeating.EconomyClassSeatNumbers.Split(",");
-                            seatStatus = seating.flightSeating.EconomyClassSeatStatus.Split(",");
-                        }
+                        seatNumber = seating.flightSeating.FirstClassSeatNumbers.Split(",");
+                        seatStatus = seating.flightSeating.FirstClassSeatStatus.Split(",");
                     }
+                    else
+                    {
+                        seatNumber = seating.flightSeating.EconomyClassSeatNumbers.Split(",");
+                        seatStatus = seating.flightSeating.EconomyClassSeatStatus.Split(",");
+                    }
+                    numberOfTickets = seating.NumberOfTickets;
+                }
 
-                    @*
-                        ----< Combine the SeatNumber String and SeatStatus array into Dictionary >----
-                    *@
+                @*
+                    ----< Combine the SeatNumber String and SeatStatus array into Dictionary >----
+                *@
 
-            IDictionary<string, string> seatsDictionary = new Dictionary<string, string>();
+                IDictionary<string, string> seatsDictionary = new Dictionary<string, string>();
 
-            for (int i = 0; i < seatNumber.Length; i++)
-            {
-                seatsDictionary.Add(seatNumber[i], seatStatus[i]);
-            }
+                for (int i = 0; i < seatNumber.Length; i++)
+                {
+                    seatsDictionary.Add(seatNumber[i], seatStatus[i]);
+                }
 
-            int k = 1;
-            int count = 1;
-            while (count <= seatsDictionary.Count)
-            {
-                int i = 1;
-                      <tr>
-                          <td>
-                              <strong>@k</strong>
-                          </td>
-                          @{
-                              k++;
-                          }
+                int k = 1;
+                int count = 1;
+                while (count <= seatsDictionary.Count)
+                {
+                    int i = 1;
+                    <tr>
+                        <td>
+                            <strong>@k</strong>
+                        </td>
+                        @{
+                            k++;
+                        }
                         @foreach (var entry in seatsDictionary)
                         {
-                            
+
                             if (i > 6)
                             {
                                 break;
-                            }                           
+                            }
 
-                                <td>
-                                    <ul class="cabin fuselage">
+                            <td>
+                                <ul class="cabin fuselage">
+
+                                    @if (@entry.Value == "X")
+                                    {
                                         <li>
-                                            <input type="checkbox" id="@entry.Key" />
+                                            <input type="checkbox" name="seatSelection" id="@entry.Key" onclick="return ValidatePetSelection(@numberOfTickets)" disabled />
                                             <label for="@entry.Key">@entry.Value</label>
                                         </li>
-                                    </ul>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <input type="checkbox" name="seatSelection" id="@entry.Key" onclick="return ValidatePetSelection(@numberOfTickets)" />
+                                            <label for="@entry.Key">@entry.Value</label>
+                                        </li>
+                                    }
 
-                                </td>
-                                i++;
+                                </ul>
 
-                                @*
-                                    ----< Removing the dictionary item that has been updated >----
-                                *@
+                            </td>
+                            i++;
 
                             count++;
 
-                         }
-                          @for(int j=0; j<=6; j++)
-                          {
-                              seatsDictionary.Remove(seatsDictionary.Keys.First());
-                          }
-                      </tr>
-                    }
+                        }
+                        @*
+                            ----< Removing the dictionary item that has been updated >----
+                        *@
 
-
+                        @for (int j = 0; j <= 6; j++)
+                        {
+                            seatsDictionary.Remove(seatsDictionary.Keys.First());
+                        }
+                    </tr>
                 }
-            </tbody>
 
-        </table>
-    
+
+            }
+        </tbody>
+
+    </table>
+
     <div class="exit exit--back fuselage">
 
     </div>
 </div>
+
+<hr />
+
+<h5>Enter Passenger Info</h5>
+
+@{
+    for (int i = 1; i <= numberOfTickets; i++)
+    {
+    <h6><strong>Passenger @i</strong></h6>    
+    <div class="travel-info">
+
+        <div class="grid-item">
+            <h6>First Name</h6>
+        </div>
+
+        <div class="grid-item">
+            <h6>Last Name</h6>
+        </div>
+
+        <div class="grid-item">
+            <h6>Date of Birth</h6>
+        </div>
+
+        <div class="grid-item">
+            <input required class="form-control" type="text" id="from-tag" name="FirstName" placeholder="First Name" aria-label="Last Name" />
+        </div>
+
+        <div class="grid-item">
+            <input required class="form-control" type="text" id="to-tag" name="LastName" placeholder="First Name" aria-label="Last Name" />
+        </div>
+
+        <div class="grid-item">
+            <input class="form-control" required type="date" name="DOB">
+        </div>
+
+    </div>   
+    }
+}
+<hr />
+<div class="search-flight">
+    <div class="form-group">
+        <input type="submit" value="Book Flight" class="btn btn-primary" />
+    </div>
+</div>
+
 

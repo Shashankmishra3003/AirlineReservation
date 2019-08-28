@@ -91,10 +91,10 @@ input[type="radio"] {
 }
 
 .passenger-info {
-    width:40%;
     margin-top: 30px;
     display: grid;
     grid-template-columns: auto auto auto;
+    justify-content:space-between;
 }
 
 .class-of-travel {
@@ -103,10 +103,20 @@ input[type="radio"] {
     grid-template-rows: auto auto;
 }
 
+.travel-info {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto;
+    justify-content: space-between;
+    width: 60%;
+}
+
+.dateInput{
+    width:auto
+}
 /*----------------------------------------------------------------------
     Plane Structure Reference: https://codepen.io
 */
-
 *,
 *:before,
 *:after {
