@@ -7,11 +7,11 @@ namespace AirlineReseravtionSystem.Models
 {
     public class FlightSeating
     {
-        public int FlightID { get; set; }
+        public int FlightSeatingID { get; set; }
         public int FlightNumber { get; set; }
         public string FirstClassSeatNumbers { get; set; }
-        public string EconomyClassSeatNumbers { get; set; }
         public string FirstClassSeatStatus { get; set; }
+        public string EconomyClassSeatNumbers { get; set; }
         public string EconomyClassSeatStatus { get; set; }
     }
 

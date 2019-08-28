@@ -202,10 +202,9 @@ namespace AirlineReseravtionSystem.Controllers
             }
         }
 
-
-        public IActionResult BookFlight(int? id, int ticketCount, string flightClass)
+        public IActionResult BookFlight(int? id, int ticketNum, string ticketClass)
         {
-            if (id == null || ticketCount == 0 || flightClass == null )
+            if (id == null || ticketNum == 0 || ticketClass == null )
             {
                 return StatusCode(StatusCodes.Status400BadRequest);
             }
@@ -219,7 +218,7 @@ namespace AirlineReseravtionSystem.Controllers
                 // ----< This is where we return the Available seat numbers and the seat status of 
                 //          selected class of Ticket, ie First or Economy >----
 
-                if (flightClass.Equals("Economy"))
+                if (ticketClass.Equals("Economy"))
                 {
 
                     flightSeatings = seats.Select(s => new AvailableSeats
@@ -230,7 +229,7 @@ namespace AirlineReseravtionSystem.Controllers
                             EconomyClassSeatNumbers = s.EconomyClassSeatNumbers,
                             EconomyClassSeatStatus = s.EconomyClassSeatStatus
                         },
-                        NumberOfTickets = ticketCount
+                        NumberOfTickets = ticketNum
                     });
                                                                 
                 }
@@ -244,7 +243,7 @@ namespace AirlineReseravtionSystem.Controllers
                             FirstClassSeatNumbers = s.FirstClassSeatNumbers,
                             FirstClassSeatStatus = s.FirstClassSeatStatus
                         },
-                        NumberOfTickets = ticketCount
+                        NumberOfTickets = ticketNum
                     });
                 }
                 return View(flightSeatings);
