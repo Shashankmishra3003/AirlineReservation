@@ -164,7 +164,7 @@ namespace AirlineReseravtionSystem.Controllers
                          flightOrder = search.OrderBy(s => s.DepartsOn)
                         .Select(s => new ReturningValue
                         {
-                            Id=s.FlightsID,
+                            FlightNumber = s.FlightNumber,
                             Name = s.FlightName,
                             Departure = s.DepartsOn,
                             Arrival = s.ArrivesOn,
@@ -182,7 +182,7 @@ namespace AirlineReseravtionSystem.Controllers
                          flightOrder = search.OrderBy(s => s.DepartsOn)
                         .Select(s => new ReturningValue
                         {
-                            Id = s.FlightsID,
+                            FlightNumber = s.FlightNumber,
                             Name = s.FlightName,
                             Departure = s.DepartsOn,
                             Arrival = s.ArrivesOn,
@@ -202,9 +202,58 @@ namespace AirlineReseravtionSystem.Controllers
             }
         }
 
-        public IActionResult BookFlight(int? id, int ticketCount)
+
+        public IActionResult BookFlight(int? id, int ticketCount, string flightClass)
         {
-            return View();
+            if (id == null || ticketCount == 0 || flightClass == null )
+            {
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+
+            try
+            {
+
+                IQueryable<AvailableSeats> flightSeatings = Enumerable.Empty<AvailableSeats>().AsQueryable();
+                var seats = _context.FlightSeatings.Where(s => s.FlightNumber.Equals(id));
+
+                // ----< This is where we return the Available seat numbers and the seat status of 
+                //          selected class of Ticket, ie First or Economy >----
+
+                if (flightClass.Equals("Economy"))
+                {
+
+                    flightSeatings = seats.Select(s => new AvailableSeats
+                    {
+                        flightSeating = new FlightSeating
+                        {
+                            FlightNumber = s.FlightNumber,
+                            EconomyClassSeatNumbers = s.EconomyClassSeatNumbers,
+                            EconomyClassSeatStatus = s.EconomyClassSeatStatus
+                        },
+                        NumberOfTickets = ticketCount
+                    });
+                                                                
+                }
+                else
+                {
+                    flightSeatings = seats.Select(s => new AvailableSeats
+                    {
+                        flightSeating = new FlightSeating
+                        {
+                            FlightNumber = s.FlightNumber,
+                            FirstClassSeatNumbers = s.FirstClassSeatNumbers,
+                            FirstClassSeatStatus = s.FirstClassSeatStatus
+                        },
+                        NumberOfTickets = ticketCount
+                    });
+                }
+                return View(flightSeatings);
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+            
         }
 
 

@@ -8,7 +8,7 @@ namespace AirlineReseravtionSystem.Models
 {
     public class ReturningValue
     {
-        public int Id { get; set; }
+        public int FlightNumber { get; set; }
         [Display(Name = "Flight Name")]
         public string Name { get; set; }
         [Display(Name = "Depature Time")]

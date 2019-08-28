@@ -87,9 +87,20 @@
 
             </td>
             @{ 
-
+                string flightClass;
+                if(flight.PEconomy == 0)
+                {
+                    flightClass = "First";
+                }
+                else
+                {
+                    flightClass = "Economy";
+                }
             <td>
-                <a asp-action="BookFlight" asp-route-id="@flight.Id" asp--route-ticketNum="@flight.TicketSelected">Select Seats</a>
+                @* 
+                    ----< Sending the seleted flight Number, number of Tickets selected and the Class of the ticket being booked, here Id is the flight Number >----
+                *@
+                <a asp-action="BookFlight" asp-route-id="@flight.FlightNumber" asp--route-ticketNum="@flight.TicketSelected" asp--route-ticketClass="@flightClass">Select Seats</a>
             </td>
             }
             

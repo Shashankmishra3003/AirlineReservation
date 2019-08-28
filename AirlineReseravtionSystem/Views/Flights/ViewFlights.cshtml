@@ -47,12 +47,23 @@
             <td>
                 <a asp-action="FLightDetails" asp-route-id="@item.FlightsID">Details</a>
             </td>
-            <td>
-                <a asp-action="EditFlightDetails" asp-route-id="@item.FlightsID">Edit</a>
-            </td>
-            <td>
-                <a asp-action="DeleteFlight" asp-route-id="@item.FlightsID">Delete</a>
-            </td>
+
+            @* 
+                ----< Making the Edit and Delete option visible only to the Administrator >----
+                ----< There is only one admin as per the design and his credentials are saved in appSettings.json >----
+            *@
+            @{
+                if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="EditFlightDetails" asp-route-id="@item.FlightsID">Edit</a>
+                    </td>
+                    <td>
+                        <a asp-action="DeleteFlight" asp-route-id="@item.FlightsID">Delete</a>
+                    </td>
+                }
+            }
+
         </tr>
         }
     </tbody>
