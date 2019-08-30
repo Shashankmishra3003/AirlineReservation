@@ -9,6 +9,7 @@ using AirlineReseravtionSystem.Data;
 using AirlineReseravtionSystem.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AirlineReseravtionSystem.Controllers
 {
@@ -24,6 +25,7 @@ namespace AirlineReseravtionSystem.Controllers
             _appEnvironment = appEnvironment;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
@@ -31,6 +33,7 @@ namespace AirlineReseravtionSystem.Controllers
 
         //----< Displays the list of all the available Flights >---------
 
+        [AllowAnonymous]
         public IActionResult ViewFlights()
         {
             try
@@ -45,6 +48,7 @@ namespace AirlineReseravtionSystem.Controllers
 
         //----< Displays the Details of the Selected Flight >---------
 
+        [AllowAnonymous]
         public ActionResult FlightDetails(int? id)
         {
             if(id == null)
@@ -64,6 +68,7 @@ namespace AirlineReseravtionSystem.Controllers
         //----<Gets form to edit a specific flight detail >---------
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public IActionResult EditFlightDetails(int? id)
         {
             if(id == null)
@@ -82,6 +87,7 @@ namespace AirlineReseravtionSystem.Controllers
         //----<Post back edited result of a specific flight detail >---------
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult EditFlightDetails(int? id, Flights flt)
         {
             if (id == null)
@@ -116,6 +122,7 @@ namespace AirlineReseravtionSystem.Controllers
 
         //----< Deletes the selected flight from the list >--------
 
+        [Authorize(Roles = "Admin")]
         public IActionResult DeleteFlight(int? id)
         {
             if(id == null)
@@ -139,6 +146,9 @@ namespace AirlineReseravtionSystem.Controllers
             return RedirectToAction("Index");
         }
 
+        //----< This action searches the database for available flights
+        //       based on search criteria and returns the result to the view >----
+        [AllowAnonymous]
         public IActionResult AvailableFlights(FlightSearch flightSearch)
         {
             if (_context.Flights.Any(fl => fl.FlightsID == 0))
@@ -204,6 +214,11 @@ namespace AirlineReseravtionSystem.Controllers
             }
         }
 
+        //----< This action returns the seat numbers and their availability status
+        //      depending based on the flight number to the view, This page is 
+        //      is available only to users who are logedIn >----
+
+        [Authorize(Roles = "Admin,User")]
         public IActionResult BookFlight(int? id, int ticketNum, string ticketClass)
         {
             if (id == null || ticketNum == 0 || ticketClass == null )
@@ -258,15 +273,47 @@ namespace AirlineReseravtionSystem.Controllers
             
         }
 
+        //----< This action Adds the Information entered by the user on the reservation
+        //      page in to database. Here the design is to convert all the First Name,
+        //      Last names and DOBs into comma seperated strings and add the strings
+        //      into the respective Columns. Other Columns are Seat number, Flight number
+        //      Journey date and the booking date >----
+
+        [Authorize(Roles = "Admin,User")]
         public IActionResult BookTicket(TicketInfo bookTicket)
         {
             string firstName = string.Join(",", bookTicket.FirstName.ToArray());
             string lastName = string.Join(",", bookTicket.LastName.ToArray());
             string DOB = string.Join(",", bookTicket.DOB.ToArray());
-            object DOJ = TempData["DOJ"];
-            object flightNumber = TempData["FlightId"];
+            string DOJ = TempData["DOJ"].ToString();
+            int flightNumber = (int) TempData["FlightId"];
 
-            return View();
+            var reservarion = _context.ReservationInfos;
+            if(reservarion != null)
+            {
+                var reservationInfo = new ReservationInfo
+                {
+                    FlightNumber = flightNumber,
+                    JourneryDate = DOJ,
+                    BookingDate = DateTime.Now,
+                    FirstNames = firstName,
+                    LastNames = lastName,
+                    DOBs = DOB
+                };
+                _context.ReservationInfos.Add(reservationInfo);
+            }
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch(Exception)
+            {
+                return RedirectToAction("Error","Home");
+            }
+
+
+            return RedirectToAction("Index","Home");
         }
 
     }
