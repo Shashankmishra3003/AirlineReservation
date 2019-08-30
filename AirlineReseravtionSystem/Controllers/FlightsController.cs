@@ -147,6 +147,8 @@ namespace AirlineReseravtionSystem.Controllers
             }
             try
             {
+                TempData["DOJ"] = flightSearch.DateSearch;
+                
                 /*
                  * ----< The if condition checks whether there ia a flight available for selected inputs 
                  *          Also the Controller returns only the required fields to the View, This is where we are returning the price
@@ -211,6 +213,7 @@ namespace AirlineReseravtionSystem.Controllers
 
             try
             {
+                TempData["FlightId"] = id;
 
                 IQueryable<AvailableSeats> flightSeatings = Enumerable.Empty<AvailableSeats>().AsQueryable();
                 var seats = _context.FlightSeatings.Where(s => s.FlightNumber.Equals(id));
@@ -255,6 +258,16 @@ namespace AirlineReseravtionSystem.Controllers
             
         }
 
+        public IActionResult BookTicket(TicketInfo bookTicket)
+        {
+            string firstName = string.Join(",", bookTicket.FirstName.ToArray());
+            string lastName = string.Join(",", bookTicket.LastName.ToArray());
+            string DOB = string.Join(",", bookTicket.DOB.ToArray());
+            object DOJ = TempData["DOJ"];
+            object flightNumber = TempData["FlightId"];
+
+            return View();
+        }
 
     }
 }

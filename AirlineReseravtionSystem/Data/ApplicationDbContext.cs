@@ -17,6 +17,8 @@ namespace AirlineReseravtionSystem.Data
         public DbSet<Flights> Flights { get; set; }
         public DbSet<FlightSeating> FlightSeatings { get; set; }
 
+        public DbSet<ReservationInfo> ReservationInfos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
