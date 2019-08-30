@@ -52,6 +52,7 @@
                 *@
 
                 @{
+                    string bookingClass = "";
                     int numberOfTickets = 0;
                     string[] seatNumber = { };
                     string[] seatStatus = { };
@@ -62,11 +63,13 @@
                         {
                             seatNumber = seating.flightSeating.FirstClassSeatNumbers.Split(",");
                             seatStatus = seating.flightSeating.FirstClassSeatStatus.Split(",");
+                            bookingClass = "First";
                         }
                         else
                         {
                             seatNumber = seating.flightSeating.EconomyClassSeatNumbers.Split(",");
                             seatStatus = seating.flightSeating.EconomyClassSeatStatus.Split(",");
+                            bookingClass = "Economy";
                         }
                         numberOfTickets = seating.NumberOfTickets;
                     }
@@ -88,8 +91,10 @@
                     {
                         int i = 1;
                         <tr>
+                            
                             <td>
                                 <strong>@k</strong>
+                                <input type="hidden" name="TicketClass" value="@bookingClass" />
                             </td>
                             @{
                                 k++;
@@ -192,6 +197,7 @@
         <div class="form-group">
             <input type="submit" value="Book Flight" class="btn btn-primary" />
         </div>
+
     </div>
 
 </form>

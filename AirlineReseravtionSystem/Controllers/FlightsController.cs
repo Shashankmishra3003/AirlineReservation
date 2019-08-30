@@ -218,7 +218,7 @@ namespace AirlineReseravtionSystem.Controllers
         //      depending based on the flight number to the view, This page is 
         //      is available only to users who are logedIn >----
 
-        [Authorize(Roles = "Admin,User")]
+        //[Authorize(Roles = "Admin,User")]
         public IActionResult BookFlight(int? id, int ticketNum, string ticketClass)
         {
             if (id == null || ticketNum == 0 || ticketClass == null )
@@ -279,7 +279,7 @@ namespace AirlineReseravtionSystem.Controllers
         //      into the respective Columns. Other Columns are Seat number, Flight number
         //      Journey date and the booking date >----
 
-        [Authorize(Roles = "Admin,User")]
+        //[Authorize(Roles = "Admin,User")]
         public IActionResult BookTicket(TicketInfo bookTicket)
         {
             string firstName = string.Join(",", bookTicket.FirstName.ToArray());
@@ -287,6 +287,74 @@ namespace AirlineReseravtionSystem.Controllers
             string DOB = string.Join(",", bookTicket.DOB.ToArray());
             string DOJ = TempData["DOJ"].ToString();
             int flightNumber = (int) TempData["FlightId"];
+            string seatNumbers = string.Join(",", bookTicket.seatSelection.ToArray());
+
+            //We need to make the sected seats unavailable to other users, inorder to change 
+            // the current seat status we need to fetch it form the database, change the value
+            // and update the database. We follow the logic of creating a dictionary of seats before chaneg
+            // and by using using the seat numbers obtained from the view we update the dictionary.
+            //Once the dictionary is updated we create a new string and update it to database.
+
+            string[] seatNumber = { };
+            string[] seatStatus = { };
+            IDictionary<string, string> seatsDictionary = new Dictionary<string, string>();
+
+            var seats = _context.FlightSeatings.Where(s => s.FlightNumber.Equals(flightNumber));
+
+            if(bookTicket.TicketClass.Equals("Economy"))
+            {
+                var economySeat = seats.Select(s => s.EconomyClassSeatNumbers).Single();
+                
+                var economyStatus = seats.Select(s => s.EconomyClassSeatStatus).Single();
+                seatNumber = economySeat.Split(",");
+                seatStatus = economyStatus.Split(",");
+
+                for (int i = 0; i < seatNumber.Length; i++)
+                {
+                    seatsDictionary.Add(seatNumber[i], seatStatus[i]);
+                }
+            }
+            else
+            {
+                var firstSeat = seats.Select(s => s.FirstClassSeatNumbers).Single();
+                var firstStatus = seats.Select(s => s.FirstClassSeatStatus).Single();
+                seatNumber = firstSeat.Split(",");
+                seatStatus = firstStatus.Split(",");
+
+                for (int i = 0; i < seatNumber.Length; i++)
+                {
+                    seatsDictionary.Add(seatNumber[i], seatStatus[i]);
+                }
+            }
+
+            //Now updating the dictionary with the new value obtained
+            foreach(var s in bookTicket.seatSelection.ToArray())
+            {
+                Console.WriteLine(s);
+                seatsDictionary[s] = "X";
+            }
+            string[] updatedStatusArray = seatsDictionary.Values.ToArray();
+            string updatedSeatStaus = string.Join(",", updatedStatusArray.ToArray());
+
+            //Now we update the seat status column
+            var flightSeatings = _context.FlightSeatings;
+            var result = flightSeatings.SingleOrDefault(s => s.FlightNumber == flightNumber);
+            if (bookTicket.TicketClass.Equals("Economy"))
+            {               
+                if(result != null)
+                {
+                    result.EconomyClassSeatStatus = updatedSeatStaus;
+                    _context.SaveChanges();
+                }
+            }
+            else
+            {
+                if (result != null)
+                {
+                    result.FirstClassSeatStatus = updatedSeatStaus;
+                    _context.SaveChanges();
+                }
+            }
 
             var reservarion = _context.ReservationInfos;
             if(reservarion != null)
@@ -298,7 +366,8 @@ namespace AirlineReseravtionSystem.Controllers
                     BookingDate = DateTime.Now,
                     FirstNames = firstName,
                     LastNames = lastName,
-                    DOBs = DOB
+                    DOBs = DOB,
+                    SeatNumbers = seatNumbers
                 };
                 _context.ReservationInfos.Add(reservationInfo);
             }

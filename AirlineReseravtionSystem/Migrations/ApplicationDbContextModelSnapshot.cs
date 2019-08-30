@@ -91,6 +91,8 @@ namespace AirlineReseravtionSystem.Migrations
 
                     b.Property<string>("LastNames");
 
+                    b.Property<string>("SeatNumbers");
+
                     b.HasKey("ReservationInfoID");
 
                     b.ToTable("ReservationInfos");

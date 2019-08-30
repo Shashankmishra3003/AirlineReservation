@@ -71,6 +71,42 @@ namespace AirlineReseravtionSystem.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FlightSeatings",
+                columns: table => new
+                {
+                    FlightSeatingID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FlightNumber = table.Column<int>(nullable: false),
+                    FirstClassSeatNumbers = table.Column<string>(nullable: true),
+                    FirstClassSeatStatus = table.Column<string>(nullable: true),
+                    EconomyClassSeatNumbers = table.Column<string>(nullable: true),
+                    EconomyClassSeatStatus = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FlightSeatings", x => x.FlightSeatingID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ReservationInfos",
+                columns: table => new
+                {
+                    ReservationInfoID = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FlightNumber = table.Column<int>(nullable: false),
+                    JourneryDate = table.Column<string>(nullable: true),
+                    BookingDate = table.Column<DateTime>(nullable: false),
+                    FirstNames = table.Column<string>(nullable: true),
+                    LastNames = table.Column<string>(nullable: true),
+                    DOBs = table.Column<string>(nullable: true),
+                    SeatNumbers = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReservationInfos", x => x.ReservationInfoID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -235,6 +271,12 @@ namespace AirlineReseravtionSystem.Migrations
 
             migrationBuilder.DropTable(
                 name: "Flights");
+
+            migrationBuilder.DropTable(
+                name: "FlightSeatings");
+
+            migrationBuilder.DropTable(
+                name: "ReservationInfos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

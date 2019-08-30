@@ -14,5 +14,6 @@ namespace AirlineReseravtionSystem.Models
         public string FirstNames { get; set; }
         public string LastNames { get; set; }
         public string DOBs { get; set; }
+        public string SeatNumbers { get; set; }
     }
 }

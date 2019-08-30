@@ -11,5 +11,6 @@ namespace AirlineReseravtionSystem.Models
         public List<string> LastName { get; set; }
         public List<string> DOB { get; set; }
         public List<string> seatSelection { get; set; }
+        public string TicketClass { get; set; }
     }
 }

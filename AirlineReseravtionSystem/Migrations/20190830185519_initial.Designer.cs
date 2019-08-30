@@ -10,16 +10,37 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineReseravtionSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190822002416_initial")]
+    [Migration("20190830185519_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.1-servicing-10028")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AirlineReseravtionSystem.Models.FlightSeating", b =>
+                {
+                    b.Property<int>("FlightSeatingID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("EconomyClassSeatNumbers");
+
+                    b.Property<string>("EconomyClassSeatStatus");
+
+                    b.Property<string>("FirstClassSeatNumbers");
+
+                    b.Property<string>("FirstClassSeatStatus");
+
+                    b.Property<int>("FlightNumber");
+
+                    b.HasKey("FlightSeatingID");
+
+                    b.ToTable("FlightSeatings");
+                });
 
             modelBuilder.Entity("AirlineReseravtionSystem.Models.Flights", b =>
                 {
@@ -52,6 +73,31 @@ namespace AirlineReseravtionSystem.Migrations
                     b.HasKey("FlightsID");
 
                     b.ToTable("Flights");
+                });
+
+            modelBuilder.Entity("AirlineReseravtionSystem.Models.ReservationInfo", b =>
+                {
+                    b.Property<int>("ReservationInfoID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("BookingDate");
+
+                    b.Property<string>("DOBs");
+
+                    b.Property<string>("FirstNames");
+
+                    b.Property<int>("FlightNumber");
+
+                    b.Property<string>("JourneryDate");
+
+                    b.Property<string>("LastNames");
+
+                    b.Property<string>("SeatNumbers");
+
+                    b.HasKey("ReservationInfoID");
+
+                    b.ToTable("ReservationInfos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
