@@ -15,12 +15,13 @@ Show seating layout of the flight for the user to pick a seat based on journery 
 </li>
 <li>
 User is only able to pick seats marked "O", seats marked "X" are already reserbed.
-<li>
+</li>
 <li>
 After seat selection user has to enter passenger information and book the ticket.
 </li>
 <li>
 User must be have an account to book tickets, all the other options available to new user.
+</li>
 <li>
 Administrator can Delete any flight or Edit any flight details.
 </li>
