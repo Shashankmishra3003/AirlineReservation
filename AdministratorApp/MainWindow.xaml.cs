@@ -112,6 +112,8 @@ namespace AdministratorApp
         {
             try
             {
+                string selectedEco = txtEcoSeats.Text;
+                string selectedFir = txtFirSeats.Text;
                 var flight = new Flight()
                 {
                     flightNumber = Int32.Parse(txtFlightNumber.Text),
@@ -121,9 +123,9 @@ namespace AdministratorApp
                     arrival = txtArrival.Text,
                     departure = txtDeparture.Text,
                     departureDate = txtDate.Text,
-                    economySeats = Int32.Parse(txtEcoSeats.Text),
+                    economySeats = Int32.Parse(selectedEco),
                     economyPrice = Int32.Parse(txtEcoPrice.Text),
-                    firstSeats = Int32.Parse(txtFirSeats.Text),
+                    firstSeats = Int32.Parse(selectedFir),
                     firstPrice = Int32.Parse(txtFirPrice.Text)
                 };
                 string url = "https://localhost:44357/api/AddFlight";
