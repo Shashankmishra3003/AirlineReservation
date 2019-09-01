@@ -28,8 +28,9 @@ Administrator can Delete any flight or Edit any flight details.
 <li>
 Delete and Edit feature available only on administrator LogIn.
 </li>
-</ol>
 <li>
 WPF application for the administrator to add new flights and view the list of available flights.
 </li>
+</ol>
+
 
