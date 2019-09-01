@@ -50,31 +50,31 @@
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="Source:"></Run>
-                                    <Run Text="{Binding flightSource}"></Run>
+                                    <Run Text="{Binding source}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="Destination:"></Run>
-                                    <Run Text="{Binding flightSource}"></Run>
+                                    <Run Text="{Binding destination}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="Arrival:"></Run>
-                                    <Run Text="{Binding flightArrival}"></Run>
+                                    <Run Text="{Binding arrival}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="Departure:"></Run>
-                                    <Run Text="{Binding flightDeparture}"></Run>
+                                    <Run Text="{Binding departure}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="Departure Date:"></Run>
-                                    <Run Text="{Binding flightDepartureDate}"></Run>
+                                    <Run Text="{Binding departureDate}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbkStyle}">
@@ -92,13 +92,13 @@
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="First Class Seats:"></Run>
-                                    <Run Text="{Binding firstCSeats}"></Run>
+                                    <Run Text="{Binding firstSeats}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                             <TextBlock Style="{StaticResource tbkStyle}">
                                 <TextBlock.Inlines>
                                     <Run Text="First Class Price:"></Run>
-                                    <Run Text="{Binding firstCPrice}"></Run>
+                                    <Run Text="{Binding firstPrice}"></Run>
                                 </TextBlock.Inlines>
                             </TextBlock>
                         </StackPanel>

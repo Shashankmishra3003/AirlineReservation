@@ -28,7 +28,7 @@ namespace AirlineReseravtionSystem.Controllers
             var flights = _context.Flights.ToList();
             foreach (var f in flights)
             {
-                flightList.Add(new Flights
+                flightList.Add(new Flights()
                 {
                     FlightNumber = f.FlightNumber,
                     FlightName = f.FlightName,
@@ -54,17 +54,17 @@ namespace AirlineReseravtionSystem.Controllers
 
             var flight = new Flights
             {
-                FlightNumber = Int32.Parse(request.Form[""]),
-                FlightName = request.Form[""],
-                Source = request.Form[""],
-                Destination = request.Form[""],
-                ArrivesOn = request.Form[""],
-                DepartsOn = request.Form[""],
-                DepartureDate =DateTime.Parse(request.Form[""]),
-                EconomyNos = Int32.Parse(request.Form[""]),
-                FirstNos = Int32.Parse(request.Form[""]),
-                PriceEconomy = Int32.Parse(request.Form[""]),
-                PriceFirst = Int32.Parse(request.Form[""])
+                FlightNumber = Int32.Parse(request.Form["flightNumber"]),
+                FlightName = request.Form["flightName"],
+                Source = request.Form["source"],
+                Destination = request.Form["destination"],
+                ArrivesOn = request.Form["arrival"],
+                DepartsOn = request.Form["departure"],
+                DepartureDate =DateTime.Parse(request.Form["departureDate"]),
+                EconomyNos = Int32.Parse(request.Form["economySeats"]),
+                FirstNos = Int32.Parse(request.Form["firstSeats"]),
+                PriceEconomy = Int32.Parse(request.Form["economyPrice"]),
+                PriceFirst = Int32.Parse(request.Form["firstPrice"])
             };
             _context.Flights.Add(flight);
             _context.SaveChanges();

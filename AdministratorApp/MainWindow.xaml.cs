@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,13 +27,16 @@ namespace AdministratorApp
     {
         public HttpClient httpClient { get; set; }
         private string baseUrl;
+        public ObservableCollection<Flight> flightDetailsList { get; set; }
         public MainWindow()
         {
             InitializeComponent();
+            baseUrl = "https://localhost:44357/api/AddFlight";
+            httpClient = new HttpClient();
             //httpClient.BaseAddress = new Uri("https://localhost:44357/api/AddFlight");
             ////httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            //this.Loaded += MainWindow_Loaded;
+            this.Loaded += MainWindow_Loaded;
         }
         public MainWindow(string url)
         {
@@ -42,10 +46,10 @@ namespace AdministratorApp
 
         async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            HttpResponseMessage response = await httpClient.GetAsync("/api/AddFlight");
-            response.EnsureSuccessStatusCode();
-            flightListView.ItemsSource = await GetAllFlights();
-            flightListView.ScrollIntoView(flightListView.ItemContainerGenerator.Items[flightListView.Items.Count - 1]);
+            //HttpResponseMessage response = await httpClient.GetAsync(baseUrl);
+            //response.EnsureSuccessStatusCode();
+             GetAllFlights();
+            //flightListView.ScrollIntoView(flightListView.ItemContainerGenerator.Items[flightListView.Items.Count - 1]);
         }
 
         //This method creates a byte array of all the fields entered by the admin.
@@ -127,8 +131,7 @@ namespace AdministratorApp
 
                 Task<HttpResponseMessage> tup = client.sendNewFlightInfo(flight);
                 MessageBox.Show("Flight Successfully Added!","Result", MessageBoxButton.OK,MessageBoxImage.Information);
-                //flightListView.ItemsSource = await GetAllFlights();
-                //flightListView.ScrollIntoView(flightListView.ItemContainerGenerator.Items[flightListView.Items.Count - 1]);
+                GetAllFlights();
 
             }
             catch(Exception)
@@ -139,7 +142,7 @@ namespace AdministratorApp
         }
 
         //Getting the list of Flights from the Database
-        public async Task<IEnumerable<string>> GetAllFlights()
+        public async Task GetAllFlights()
         {
             HttpResponseMessage response = await httpClient.GetAsync(baseUrl);
             var flightList = new List<string>();
@@ -147,10 +150,23 @@ namespace AdministratorApp
             {
                 var json = await response.Content.ReadAsStringAsync();
                 JArray jArr = (JArray)JsonConvert.DeserializeObject(json);
+                flightDetailsList = new ObservableCollection<Flight>();
                 foreach (var item in jArr)
-                    flightList.Add(item.ToString());
+                    flightDetailsList.Add(new Flight() {
+                        flightNumber=Int32.Parse(item["flightNumber"].ToString()),
+                        flightName = item["flightName"].ToString(),
+                        source = item["source"].ToString(),
+                        destination = item["destination"].ToString(),
+                        departureDate = item["departureDate"].ToString(),
+                        departure = item["departsOn"].ToString(),
+                        arrival = item["arrivesOn"].ToString(),
+                        economySeats = Int32.Parse(item["economyNos"].ToString()),
+                        firstSeats = Int32.Parse(item["firstNos"].ToString()),
+                        economyPrice = Int32.Parse(item["priceEconomy"].ToString()),
+                        firstPrice = Int32.Parse(item["priceFirst"].ToString())
+                    });
             }
-            return flightList;
+            flightListView.ItemsSource = flightDetailsList;
         }
        
     }
