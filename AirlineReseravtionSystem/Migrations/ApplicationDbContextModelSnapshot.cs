@@ -87,7 +87,7 @@ namespace AirlineReseravtionSystem.Migrations
 
                     b.Property<int>("FlightNumber");
 
-                    b.Property<string>("JourneryDate");
+                    b.Property<string>("JourneyDate");
 
                     b.Property<string>("LastNames");
 

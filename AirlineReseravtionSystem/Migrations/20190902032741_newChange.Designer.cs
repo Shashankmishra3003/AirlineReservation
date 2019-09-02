@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AirlineReseravtionSystem.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190830185519_initial")]
-    partial class initial
+    [Migration("20190902032741_newChange")]
+    partial class newChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,7 +89,7 @@ namespace AirlineReseravtionSystem.Migrations
 
                     b.Property<int>("FlightNumber");
 
-                    b.Property<string>("JourneryDate");
+                    b.Property<string>("JourneyDate");
 
                     b.Property<string>("LastNames");
 

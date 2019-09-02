@@ -10,7 +10,7 @@
     <Window.Resources>
         <ControlTemplate x:Key="btnTemplate" TargetType="Button">
             <Grid>
-                <Rectangle RadiusX="5" RadiusY="5" Fill="LightSkyBlue" Width="110" Height="30">
+                <Rectangle RadiusX="5" RadiusY="5" Fill="LightSkyBlue" Width="160" Height="30">
                 </Rectangle>
                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center">
                 </ContentPresenter>
@@ -18,164 +18,238 @@
         </ControlTemplate>
         <Style TargetType="TextBlock">
             <Setter Property="Foreground" Value="DeepSkyBlue"/>
-            <Setter Property="FontSize" Value="13"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
         </Style>
         <Style x:Key="tbkStyle" TargetType="TextBlock">
             <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="FontSize" Value="13"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
         </Style>
     </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel x:Name="flightPanel" Grid.Column="0">
-            <TextBlock Text="List of Flights" FontSize="20" FontWeight="SemiBold"></TextBlock>
-            <ListView x:Name="flightListView" Margin="0,10,0,0" Background="Transparent" Height="400" ScrollViewer.CanContentScroll="True" >
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Border BorderThickness="1" BorderBrush="Black">
-                                <TextBlock Style="{StaticResource tbkStyle}">
-                                    <TextBlock.Inlines>
-                                        <Run Text="Flight Number:"></Run>
-                                        <Run Text="{Binding flightNumber}"></Run>
-                                    </TextBlock.Inlines>
-                                </TextBlock>
-                            </Border>
-                            
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Flight Name:"></Run>
-                                    <Run Text="{Binding flightName}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Source:"></Run>
-                                    <Run Text="{Binding source}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Destination:"></Run>
-                                    <Run Text="{Binding destination}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Arrival Time:"></Run>
-                                    <Run Text="{Binding arrival}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Departure Time:"></Run>
-                                    <Run Text="{Binding departure}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Departure Date:"></Run>
-                                    <Run Text="{Binding departureDate}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Economy Seats:"></Run>
-                                    <Run Text="{Binding economySeats}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="Economy Price:"></Run>
-                                    <Run Text="{Binding economyPrice}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="First Class Seats:"></Run>
-                                    <Run Text="{Binding firstSeats}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
-                            <TextBlock Style="{StaticResource tbkStyle}">
-                                <TextBlock.Inlines>
-                                    <Run Text="First Class Price:"></Run>
-                                    <Run Text="{Binding firstPrice}"></Run>
-                                </TextBlock.Inlines>
-                            </TextBlock>
+        <TabControl>
+            <TabItem Header="View Flights">
+                <StackPanel x:Name="flightPanel" Grid.Column="0">
+                    <TextBlock Text="List of Flights" FontSize="20" FontWeight="SemiBold"></TextBlock>
+                    <ListView x:Name="flightListView" Margin="0,10,0,0" Background="Transparent" Height="400" ScrollViewer.CanContentScroll="True" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Border BorderThickness="1" BorderBrush="Black">
+                                        <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                            <TextBlock.Inlines>
+                                                <Run Text="Flight Number:"></Run>
+                                                <Run Text="{Binding flightNumber}"></Run>
+                                            </TextBlock.Inlines>
+                                        </TextBlock>
+                                    </Border>
+
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Flight Name:"></Run>
+                                            <Run Text="{Binding flightName}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Source:"></Run>
+                                            <Run Text="{Binding source}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Destination:"></Run>
+                                            <Run Text="{Binding destination}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Arrival Time:"></Run>
+                                            <Run Text="{Binding arrival}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Departure Time:"></Run>
+                                            <Run Text="{Binding departure}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Departure Date:"></Run>
+                                            <Run Text="{Binding departureDate}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Economy Seats:"></Run>
+                                            <Run Text="{Binding economySeats}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Economy Price:"></Run>
+                                            <Run Text="{Binding economyPrice}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="First Class Seats:"></Run>
+                                            <Run Text="{Binding firstSeats}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="First Class Price:"></Run>
+                                            <Run Text="{Binding firstPrice}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <Separator/>
+                                </StackPanel>
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="Add Flight">
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Margin="10,0,0,0">
+                        <TextBlock Text="Add a new Flight" FontSize="20" FontWeight="SemiBold"></TextBlock>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Flight Number" Width="160"></TextBlock>
+                            <TextBox x:Name="txtFlightNumber" Margin="10,0,0,0" Width="200"></TextBox>
                         </StackPanel>
-                    </DataTemplate>
-                    
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="10,0,0,0">
-                <TextBlock Text="Add a new Flight" FontSize="20" FontWeight="SemiBold"></TextBlock>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Flight Number" Width="110"></TextBlock>
-                    <TextBox x:Name="txtFlightNumber" Margin="10,0,0,0" Width="200"></TextBox>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Flight Name" Width="160"></TextBlock>
+                            <TextBox x:Name="txtFlightName" Margin="10,0,0,0" Width="200"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Source" Width="160"></TextBlock>
+                            <TextBox x:Name="txtSource" Margin="10,0,0,0" Width="200"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Destination" Width="160"></TextBlock>
+                            <TextBox x:Name="txtDestination" Margin="10,0,0,0" Width="200"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Arrival(HH:MM)" Width="160"></TextBlock>
+                            <TextBox x:Name="txtArrival" Margin="10,0,0,0" Width="200" materialDesign:HintAssist.Hint="HH:MM"  materialDesign:HintAssist.IsFloating="True"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Departure(HH:MM)" Width="160"></TextBlock>
+                            <TextBox x:Name="txtDeparture" Margin="10,0,0,0" Width="200" materialDesign:HintAssist.Hint="HH:MM"  materialDesign:HintAssist.IsFloating="True"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Travel Date(YYYY/MM/dd)" Width="160"></TextBlock>
+                            <TextBox x:Name="txtDate" Margin="10,0,0,0" Width="200"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Economy Seats" Width="160"></TextBlock>
+                            <ComboBox x:Name="txtEcoSeats" Margin="10 0 0 0" Width="200">
+                                <ComboBoxItem IsSelected="True">24</ComboBoxItem>
+                                <ComboBoxItem>36</ComboBoxItem>
+                                <ComboBoxItem>48</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Price($)" Width="160"></TextBlock>
+                            <TextBox x:Name="txtEcoPrice" Margin="10,0,0,0" Width="200"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="First Class Seats" Width="160"></TextBlock>
+                            <ComboBox x:Name="txtFirSeats" Margin="10 0 0 0" Width="200">
+                                <ComboBoxItem IsSelected="True">6</ComboBoxItem>
+                                <ComboBoxItem>12</ComboBoxItem>
+                                <ComboBoxItem>18</ComboBoxItem>
+                            </ComboBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                            <TextBlock Text="Price($)" Width="160"></TextBlock>
+                            <TextBox x:Name="txtFirPrice" Margin="10,0,0,0" Width="200"></TextBox>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="120,30,0,0">
+                            <Button x:Name="btnNewFlight" Template="{StaticResource  btnTemplate}" Content="Add New Flight" Margin="0,0,10,0" Click="btnNewFlight_Click"></Button>
+                        </StackPanel>
+                    </StackPanel>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="View Tickets">
+                <StackPanel x:Name="ticketPanel" Grid.Column="0">
+                    <TextBlock Text="Booked Flights" FontSize="20" FontWeight="SemiBold"></TextBlock>
+                    <ListView x:Name="ticketListView" Margin="0,10,0,0" Background="Transparent" Height="400" ScrollViewer.CanContentScroll="True" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Border BorderThickness="1" BorderBrush="Black">
+                                        <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                            <TextBlock.Inlines>
+                                                <Run Text="Reservation ID:"></Run>
+                                                <Run Text="{Binding ReservationInfoID}"></Run>
+                                            </TextBlock.Inlines>
+                                        </TextBlock>
+                                    </Border>
+
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Flight Number:"></Run>
+                                            <Run Text="{Binding FlightNumber}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Journey Date:"></Run>
+                                            <Run Text="{Binding JourneryDate}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Booking Date:"></Run>
+                                            <Run Text="{Binding BookingDate}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="First Name:"></Run>
+                                            <Run Text="{Binding FirstName}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Last Name:"></Run>
+                                            <Run Text="{Binding LastName}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="DOB:"></Run>
+                                            <Run Text="{Binding DOB}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+                                    <TextBlock Style="{StaticResource tbkStyle}" Padding="5">
+                                        <TextBlock.Inlines>
+                                            <Run Text="Seat Number:"></Run>
+                                            <Run Text="{Binding SeatNumber}"></Run>
+                                        </TextBlock.Inlines>
+                                    </TextBlock>
+
+                                    <Separator/>
+                                </StackPanel>
+                            </DataTemplate>
+
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Flight Name" Width="110"></TextBlock>
-                    <TextBox x:Name="txtFlightName" Margin="10,0,0,0" Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Source" Width="110"></TextBlock>
-                    <TextBox x:Name="txtSource" Margin="10,0,0,0" Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Destination" Width="110"></TextBlock>
-                    <TextBox x:Name="txtDestination" Margin="10,0,0,0" Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Arrival(HH:MM)" Width="110"></TextBlock>
-                    <TextBox x:Name="txtArrival" Margin="10,0,0,0" Width="200" materialDesign:HintAssist.Hint="HH:MM"  materialDesign:HintAssist.IsFloating="True"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Departure(HH:MM)" Width="110"></TextBlock>
-                    <TextBox x:Name="txtDeparture" Margin="10,0,0,0" Width="200" materialDesign:HintAssist.Hint="HH:MM"  materialDesign:HintAssist.IsFloating="True"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Departure Date" Width="110"></TextBlock>
-                    <DatePicker x:Name="txtDate" Margin="10,0,0,0" Width="200"></DatePicker>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Economy Seats" Width="110"></TextBlock>
-                    <ComboBox x:Name="txtEcoSeats" Margin="10 0 0 0" Width="200">
-                        <ComboBoxItem IsSelected="True">24</ComboBoxItem>
-                        <ComboBoxItem>36</ComboBoxItem>
-                        <ComboBoxItem>48</ComboBoxItem>
-                    </ComboBox>
-                    <!--<TextBox x:Name="txtEcoSeats" Margin="10,0,0,0" Width="200"></TextBox>-->
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Price($)" Width="110"></TextBlock>
-                    <TextBox x:Name="txtEcoPrice" Margin="10,0,0,0" Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="First Class Seats" Width="110"></TextBlock>
-                    <ComboBox x:Name="txtFirSeats" Margin="10 0 0 0" Width="200">
-                        <ComboBoxItem IsSelected="True">6</ComboBoxItem>
-                        <ComboBoxItem>12</ComboBoxItem>
-                        <ComboBoxItem>18</ComboBoxItem>
-                    </ComboBox>
-                    <!--<TextBox x:Name="txtFirSeats" Margin="10,0,0,0" Width="200"></TextBox>-->
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBlock Text="Price($)" Width="110"></TextBlock>
-                    <TextBox x:Name="txtFirPrice" Margin="10,0,0,0" Width="200"></TextBox>
-                </StackPanel>
-                <StackPanel Orientation="Horizontal" Margin="120,30,0,0">
-                    <Button x:Name="btnNewFlight" Template="{StaticResource  btnTemplate}" Content="Add New Flight" Margin="0,0,10,0" Click="btnNewFlight_Click"></Button>
-                </StackPanel>
-            </StackPanel>
-            
-        </Grid>
+            </TabItem>
+        </TabControl>
+        
     </Grid>
+
 </Window>

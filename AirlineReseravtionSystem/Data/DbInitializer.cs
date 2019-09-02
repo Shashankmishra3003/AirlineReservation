@@ -25,7 +25,7 @@ namespace AirlineReseravtionSystem.Data
                                 DepartureDate=new DateTime().AddDays(26).AddMonths(07).AddYears(2018),ArrivesOn=new DateTime().AddHours(19).AddMinutes(00).ToString("HH:mm"), EconomyNos=120,FirstNos=10,PriceEconomy=200,PriceFirst=500}
             };
 
-            foreach(Flights f in flights)
+            foreach (Flights f in flights)
             {
                 context.Flights.Add(f);
             }

@@ -75,6 +75,7 @@ namespace AirlineReseravtionSystem.Controllers
         {
             List<Flights> flightList = new List<Flights>();
             var flights = _context.Flights.ToList();
+            
             foreach (var f in flights)
             {
                 flightList.Add(new Flights()
@@ -95,6 +96,28 @@ namespace AirlineReseravtionSystem.Controllers
             return flightList;
         }
 
+        [HttpGet("{id}")]
+        public IEnumerable<ReservationInfo> GetTickets(int id)
+        {
+            List<ReservationInfo> ticketList = new List<ReservationInfo>();
+            var tickets = _context.ReservationInfos.ToList();
+            foreach (var f in tickets)
+            {
+                ticketList.Add(new ReservationInfo()
+                {
+                    ReservationInfoID = f.ReservationInfoID,
+                    FlightNumber = f.FlightNumber,
+                    JourneyDate = f.JourneyDate,
+                    BookingDate = f.BookingDate,
+                    FirstNames = f.FirstNames,
+                    LastNames = f.LastNames,
+                    DOBs = f.DOBs,
+                    SeatNumbers = f.SeatNumbers
+                });
+            }
+            return ticketList;
+        }
+
         // POST api/<controller>
         [HttpPost]
         public async Task<IActionResult> AddFlight()
@@ -109,7 +132,7 @@ namespace AirlineReseravtionSystem.Controllers
                 Destination = request.Form["destination"],
                 ArrivesOn = request.Form["arrival"],
                 DepartsOn = request.Form["departure"],
-                DepartureDate =DateTime.Parse(request.Form["departureDate"]),
+                DepartureDate = DateTime.Parse(request.Form["departureDate"]),
                 EconomyNos = Int32.Parse(request.Form["economySeats"]),
                 FirstNos = Int32.Parse(request.Form["firstSeats"]),
                 PriceEconomy = Int32.Parse(request.Form["economyPrice"]),

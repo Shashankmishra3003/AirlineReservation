@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AirlineReseravtionSystem.Migrations
 {
-    public partial class initial : Migration
+    public partial class newChange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -94,7 +94,7 @@ namespace AirlineReseravtionSystem.Migrations
                     ReservationInfoID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FlightNumber = table.Column<int>(nullable: false),
-                    JourneryDate = table.Column<string>(nullable: true),
+                    JourneyDate = table.Column<string>(nullable: true),
                     BookingDate = table.Column<DateTime>(nullable: false),
                     FirstNames = table.Column<string>(nullable: true),
                     LastNames = table.Column<string>(nullable: true),

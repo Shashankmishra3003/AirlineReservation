@@ -28,14 +28,13 @@ namespace AdministratorApp
         public HttpClient httpClient { get; set; }
         private string baseUrl;
         public ObservableCollection<Flight> flightDetailsList { get; set; }
+        public ObservableCollection<Ticket> ticketDetailsList { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             baseUrl = "https://localhost:44357/api/AddFlight";
             httpClient = new HttpClient();
-            //httpClient.BaseAddress = new Uri("https://localhost:44357/api/AddFlight");
-            ////httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
+        
             this.Loaded += MainWindow_Loaded;
         }
         public MainWindow(string url)
@@ -44,12 +43,11 @@ namespace AdministratorApp
             httpClient = new HttpClient();
         }
 
-        async void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //HttpResponseMessage response = await httpClient.GetAsync(baseUrl);
-            //response.EnsureSuccessStatusCode();
-             GetAllFlights();
-            //flightListView.ScrollIntoView(flightListView.ItemContainerGenerator.Items[flightListView.Items.Count - 1]);
+            _ = GetAllFlights();
+            //_ = GetAllTickets();
+
         }
 
         //This method creates a byte array of all the fields entered by the admin.
@@ -108,7 +106,7 @@ namespace AdministratorApp
         }
 
         //Method to handle the button click
-        public  async void btnNewFlight_Click(object sender, RoutedEventArgs e)
+        public async void btnNewFlight_Click(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -133,7 +131,7 @@ namespace AdministratorApp
 
                 Task<HttpResponseMessage> tup = client.sendNewFlightInfo(flight);
                 MessageBox.Show("Flight Successfully Added!","Result", MessageBoxButton.OK,MessageBoxImage.Information);
-                GetAllFlights();
+                _ = GetAllFlights();
 
             }
             catch(Exception)
@@ -154,12 +152,15 @@ namespace AdministratorApp
                 JArray jArr = (JArray)JsonConvert.DeserializeObject(json);
                 flightDetailsList = new ObservableCollection<Flight>();
                 foreach (var item in jArr)
-                    flightDetailsList.Add(new Flight() {
-                        flightNumber=Int32.Parse(item["flightNumber"].ToString()),
+                {
+                    string departure = item["departureDate"].ToString().Substring(0, item["departureDate"].ToString().IndexOf(" ")+1);
+                    flightDetailsList.Add(new Flight()
+                    {
+                        flightNumber = Int32.Parse(item["flightNumber"].ToString()),
                         flightName = item["flightName"].ToString(),
                         source = item["source"].ToString(),
                         destination = item["destination"].ToString(),
-                        departureDate = item["departureDate"].ToString(),
+                        departureDate = departure,
                         departure = item["departsOn"].ToString(),
                         arrival = item["arrivesOn"].ToString(),
                         economySeats = Int32.Parse(item["economyNos"].ToString()),
@@ -167,10 +168,42 @@ namespace AdministratorApp
                         economyPrice = Int32.Parse(item["priceEconomy"].ToString()),
                         firstPrice = Int32.Parse(item["priceFirst"].ToString())
                     });
+                }
+                    
             }
             flightListView.ItemsSource = flightDetailsList;
+
+            await GetAllTickets();
         }
-       
+
+        public async Task GetAllTickets()
+        {
+            HttpResponseMessage response = await httpClient.GetAsync(baseUrl + "/1");
+            var ticketList = new List<string>();
+            if (response.IsSuccessStatusCode)
+            {
+                var json = await response.Content.ReadAsStringAsync();
+                JArray jArr = (JArray)JsonConvert.DeserializeObject(json);
+                ticketDetailsList = new ObservableCollection<Ticket>();
+                foreach (var item in jArr)
+                {
+                    string departure = item["journeyDate"].ToString().Substring(0, item["journeyDate"].ToString().IndexOf(" ") + 1);
+                    ticketDetailsList.Add(new Ticket()
+                    {
+                        ReservationInfoID = Int32.Parse(item["reservationInfoID"].ToString()),
+                        FlightNumber = Int32.Parse(item["flightNumber"].ToString()),
+                        JourneryDate = departure,
+                        BookingDate = item["bookingDate"].ToString(),
+                        FirstName = item["firstNames"].ToString(),
+                        LastName = item["lastNames"].ToString(),
+                        DOB = item["doBs"].ToString(),
+                        SeatNumber = item["seatNumbers"].ToString(),
+                    });
+                }
+                    
+            }
+            ticketListView.ItemsSource = ticketDetailsList;
+        }
     }
 
 
@@ -187,5 +220,17 @@ namespace AdministratorApp
         public int economyPrice { get; set; }
         public int firstSeats { get; set;}
         public int firstPrice { get; set; }
+    }
+
+    public class Ticket
+    {
+        public int ReservationInfoID { get; set; }
+        public int FlightNumber { get; set; }
+        public string JourneryDate { get; set; }
+        public string BookingDate { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string DOB{ get; set; }
+        public string SeatNumber { get; set; }
     }
 }

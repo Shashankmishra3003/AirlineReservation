@@ -362,7 +362,7 @@ namespace AirlineReseravtionSystem.Controllers
                 var reservationInfo = new ReservationInfo
                 {
                     FlightNumber = flightNumber,
-                    JourneryDate = DOJ,
+                    JourneyDate = DOJ,
                     BookingDate = DateTime.Now,
                     FirstNames = firstName,
                     LastNames = lastName,
