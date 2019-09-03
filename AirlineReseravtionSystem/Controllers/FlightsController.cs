@@ -218,7 +218,7 @@ namespace AirlineReseravtionSystem.Controllers
         //      depending based on the flight number to the view, This page is 
         //      is available only to users who are logedIn >----
 
-        //[Authorize(Roles = "Admin,User")]
+        [Authorize(Roles = "Admin,User")]
         public IActionResult BookFlight(int? id, int ticketNum, string ticketClass)
         {
             if (id == null || ticketNum == 0 || ticketClass == null )
@@ -289,11 +289,11 @@ namespace AirlineReseravtionSystem.Controllers
             int flightNumber = (int) TempData["FlightId"];
             string seatNumbers = string.Join(",", bookTicket.seatSelection.ToArray());
 
-            //We need to make the sected seats unavailable to other users, inorder to change 
+            //----< We need to make the sected seats unavailable to other users, inorder to change 
             // the current seat status we need to fetch it form the database, change the value
             // and update the database. We follow the logic of creating a dictionary of seats before chaneg
             // and by using using the seat numbers obtained from the view we update the dictionary.
-            //Once the dictionary is updated we create a new string and update it to database.
+            //Once the dictionary is updated we create a new string and update it to database. >----
 
             string[] seatNumber = { };
             string[] seatStatus = { };

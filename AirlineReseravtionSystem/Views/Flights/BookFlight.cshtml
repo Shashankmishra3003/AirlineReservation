@@ -78,18 +78,25 @@
                         ----< Combine the SeatNumber String and SeatStatus array into Dictionary >----
                     *@
 
-                    IDictionary<string, string> seatsDictionary = new Dictionary<string, string>();
+                IDictionary<string, string> seatsDictionary = new Dictionary<string, string>();
 
-                    for (int i = 0; i < seatNumber.Length; i++)
-                    {
-                        seatsDictionary.Add(seatNumber[i], seatStatus[i]);
-                    }
+                for (int i = 0; i < seatNumber.Length; i++)
+                {
+                    seatsDictionary.Add(seatNumber[i], seatStatus[i]);
+                }
+                //----< Get the first value from the dictionary to start the row numbers from that number >----
 
-                    int k = 1;
-                    int count = 1;
-                    while (count <= seatsDictionary.Count)
-                    {
-                        int i = 1;
+                var first = seatsDictionary.First();
+                string key = first.Key;
+
+                //-----< k is the row number which keeps incrementing and show the row number depending upon
+                //          the values from the database >---
+
+                int k = Int32.Parse(key.Substring(0,1));
+                int count = 1;
+                while (count <= seatsDictionary.Count)
+                {
+                    int i = 1;
                         <tr>
                             
                             <td>
@@ -137,7 +144,7 @@
                                 ----< Removing the dictionary item that has been updated >----
                             *@
 
-                            @for (int j = 0; j <= 6; j++)
+                            @for (int j = 1; j <= 6; j++)
                             {
                                 seatsDictionary.Remove(seatsDictionary.Keys.First());
                             }
@@ -157,6 +164,10 @@
 
     <hr />
 
+    @* 
+        ----< This section acts as the Passenger information input block which asks the user to input
+                First Name,Last Name and date of birth >----
+    *@
     <h5>Enter Passenger Info</h5>
 
     @{
@@ -182,7 +193,7 @@
                 </div>
 
                 <div class="grid-item">
-                    <input required class="form-control" type="text" id="to-tag" name="LastName" placeholder="First Name" aria-label="Last Name" />
+                    <input required class="form-control" type="text" id="to-tag" name="LastName" placeholder="Last Name" aria-label="Last Name" />
                 </div>
 
                 <div class="grid-item">
@@ -193,6 +204,9 @@
         }
     }
     <hr />
+    @* 
+        ----< Submits the Seat number selected, User information to the Controller usinf POST method >----
+    *@
     <div class="search-flight">
         <div class="form-group">
             <input type="submit" value="Book Flight" class="btn btn-primary" />

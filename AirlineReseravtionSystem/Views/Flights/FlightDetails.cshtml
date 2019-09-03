@@ -30,6 +30,16 @@
         </dd>
 
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartureDate)
+        </dt>
+        @{ 
+            string departure = Model.DepartureDate.ToString().Substring(0, Model.DepartureDate.ToString().IndexOf(" ") + 1);
+        }
+        <dd class="col-sm-10">
+            @departure
+        </dd>
+
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Destination)
         </dt>
         <dd class="col-sm-10">

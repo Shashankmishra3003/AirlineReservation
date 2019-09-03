@@ -143,7 +143,7 @@ namespace AirlineReseravtionSystem.Controllers
 
             //----< After saving the New Flight information into the Database, the seating arrangement for the flight 
             //      must be added into the FlightSeating table. We get the seat number and the status into a string and 
-            //      add that string to the database along with flight number >----
+            //      add that string to the database along with flight number with any adminstrator involvement >----
 
             int economyNOS = Int32.Parse(request.Form["economySeats"]);
             int firstNOS = Int32.Parse(request.Form["firstSeats"]);

@@ -46,12 +46,11 @@ namespace AdministratorApp
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             _ = GetAllFlights();
-            //_ = GetAllTickets();
 
         }
 
-        //This method creates a byte array of all the fields entered by the admin.
-        //After ading the byte arrays to multipart form data content,the data is sent to the database.
+        //----< This method creates a byte array of all the fields entered by the admin.
+        //After ading the byte arrays to multipart form data content,the data is sent to the database. >----
         public async Task<HttpResponseMessage> sendNewFlightInfo(Flight flight)
         {
             MultipartFormDataContent multipart = new MultipartFormDataContent();
@@ -132,6 +131,7 @@ namespace AdministratorApp
                 Task<HttpResponseMessage> tup = client.sendNewFlightInfo(flight);
                 MessageBox.Show("Flight Successfully Added!","Result", MessageBoxButton.OK,MessageBoxImage.Information);
                 _ = GetAllFlights();
+                _ = GetAllTickets();
 
             }
             catch(Exception)
@@ -141,7 +141,7 @@ namespace AdministratorApp
 
         }
 
-        //Getting the list of Flights from the Database
+        //----< Getting the list of Flights from the Database >----
         public async Task GetAllFlights()
         {
             HttpResponseMessage response = await httpClient.GetAsync(baseUrl);
@@ -176,6 +176,7 @@ namespace AdministratorApp
             await GetAllTickets();
         }
 
+        //----< Gets the List of all the flights booked by all the users >----
         public async Task GetAllTickets()
         {
             HttpResponseMessage response = await httpClient.GetAsync(baseUrl + "/1");
